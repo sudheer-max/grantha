@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block content %}
+<div class="container mt-5 mb-5">
+    <div class="info">
+        <div class="date text-heading text-center">
+            <h1>HERE IS THE SEARCH RESULTS</h1>
+        </div>
+        {% for pack in queryset %}
+        <a href="{{ pack.get_absolute_url }}" class="p-5 mb-5">
+            <h3>{{ pack.title }}</h3>
+            <p>{{ pack.overview }}</p>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

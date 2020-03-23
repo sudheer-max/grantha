@@ -1,0 +1,84 @@
+<div class="col-lg-4">
+    <div class="blog_right_sidebar">
+        <aside class="single_sidebar_widget search_widget">
+            <form action="{% url 'grantha:search' %}">
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <input type="text" name="q" class="form-control" placeholder='Search Keyword' onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
+                        <div class="input-group-append">
+                            <button class="btn" type="button"><i class="ti-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Search</button>
+            </form>
+        </aside>
+
+        <aside class="single_sidebar_widget post_category_widget">
+            <h4 class="widget_title">Category</h4>
+            <ul class="list cat-list">
+                {% for cat in category_count %}
+                <li>
+                    <a href="{{ pack.get_absolute_url }}" class="d-flex">
+                        <p>{{ cat.categories__title }}</p>
+                        <strong>[{{ cat.categories__title__count }}] </strong>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+        <aside class="single_sidebar_widget popular_post_widget">
+
+            <h3 class="widget_title">Recent Post</h3>
+            {% for pack in most_recent %}
+            <div class="media post_item">
+                <img src="{{ pack.thumbnail.url }}" style="width: 80px;" class="img-fluid img-thumbnail" alt="post">
+                <div class="media-body">
+                    <a href="{{ pack.get_absolute_url }}">
+                        <h3>{{ pack.title }}</h3>
+                    </a>
+                    <p>{{ pack.timestamp|timesince }} ago </p>
+                </div>
+            </div>
+            {% endfor %}
+        </aside>
+        <aside class="single_sidebar_widget tag_cloud_widget">
+            <h4 class="widget_title">Tag Clouds</h4>
+            <ul class="list">
+                {% for cat in tag_count %}
+                <li>
+                    <a href="{{ pack.get_absolute_url }}">{{  cat.categories__title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+
+        <aside class="single_sidebar_widget instagram_feeds">
+            <h4 class="widget_title">Instagram Feeds</h4>
+            <ul class="instagram_row flex-wrap">
+                {% for pack in featured %}
+                <li>
+                    <a href="{{ pack.get_absolute_url }}">
+                        <img class="img-fluid" src="{{ pack.thumbnail.url }}" alt="">
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </aside>
+
+
+        <aside class="single_sidebar_widget newsletter_widget">
+            <h4 class="widget_title">Newsletter</h4>
+
+            <form action="." method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="email" name="email" id="email" class="form-control" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
+                </div>
+                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Subscribe</button>
+            </form>
+        </aside>
+    </div>
+</div>

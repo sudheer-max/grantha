@@ -1,0 +1,103 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container mb-5">
+    <h1 class="text-center">{{ pack.title }}</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'grantha:home' %}"> <i class="fa fa-home"> Home</i></a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{ pack.title }}</li>
+        </ol>
+    </nav>
+</div>
+
+<!--================Blog Area =================-->
+<section class="blog_area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                <div class="blog_left_sidebar">
+                    <article class="blog_item">
+                        <div class="blog_item_img">
+                            <ul class="list">
+                                <li>
+                                    {% for cat in pack.categories.all %}
+                                    <a href="#">{{ cat }}</a> {% endfor %}
+                                </li>
+                                <li>
+                                    <i class="fa fa-clock-o"></i>
+                                    <a href="#">{{ pack.timestamp|timesince }} ago </a>
+                                </li>
+                            </ul>
+                            <hr>
+                            <img class="card-img rounded-0" src="{{  pack.thumbnail.url }}" alt="">
+                        </div>
+
+                        <div class="blog_details">
+                            <a class="d-inline-block" href="single-blog.html">
+                                <h2>{{ pack.title }}</h2>
+                            </a>
+                            <p>{{ pack.overview }}</p>
+                            <hr>
+                            <p>{{ pack.content | safe }}</p>
+                        </div>
+                    </article>
+
+                    <div class="navigation-area">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
+                                {% if pack.previous_package %}
+                                <div class="thumb">
+                                    <a href="{{ pack.previous_package.get_absolute_url  }}">
+                                        <img class="img-fluid" src="{{ pack.previous_package.thumbnail.url }}" alt="" style="width: 80px;>
+                                    </a>
+                                </div>
+                                <div class="arrow">
+                                    <a href="{{ pack.previous_package.get_absolute_url  }}">
+                                        <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div class="detials">
+                                    <p>Previous Package</p>
+                                    <a href="{{ pack.previous_package.get_absolute_url }}">
+                                        <h4>{{ pack.previous_package.title }}</h4>
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
+                                {% if pack.next_package %}
+                                <div class="detials">
+                                    <p>Next package</p>
+                                    <a href="{{ pack.next_package.get_absolute_url }}">
+                                        <h4>{{ pack.next_package.title }}</h4>
+                                    </a>
+                                </div>
+                                <div class="arrow">
+                                    <a href="{{ pack.next_package.get_absolute_url }}">
+                                        <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                                <div class="thumb">
+                                    <a href="{{ pack.next_package.get_absolute_url }}">
+                                        <img class="img-fluid" src="{{ pack.next_package.thumbnail.url }}" alt="" style="width: 80px;">
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            {% include "sidebar.html" with category_count=category_count most_recent=most_recent tag_count=tag_count featured=featured %}
+
+        </div>
+    </div>
+</section>
+<!--================Blog Area =================-->
+
+
+{% endblock content %}

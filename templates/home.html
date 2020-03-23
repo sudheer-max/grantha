@@ -1,0 +1,155 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+<style>
+    /* Make the image fully responsive */
+    
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .carousel-caption h3,
+    .carousel-caption p {
+        color: aliceblue;
+    }
+</style>
+<div id="demo" class="carousel slide" data-ride="carousel">
+    <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+        <li data-target="#demo" data-slide-to="3"></li>
+    </ul>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'img/image7.jpg' %}" alt="Los Angeles" width="1100" height="500">
+            <div class="carousel-caption">
+                <!-- <h3>Los Angeles</h3>
+                <p>We had such a great time in LA!</p> -->
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/image8.jpg' %}" alt="Chicago" width="1100" height="500">
+            <div class="carousel-caption">
+                <!-- <h3>Chicago</h3>
+                <p>Thank you, Chicago!</p> -->
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/image9.jpg' %}" alt="New York" width="1100" height="500">
+            <div class="carousel-caption">
+                <!-- <h3>New York</h3>
+                <p>We love the Big Apple!</p> -->
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'img/image10.jpg' %}" alt="New York" width="1100" height="500">
+            <div class="carousel-caption">
+                <!-- <h3>New York</h3>
+                <p>We love the Big Apple!</p> -->
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#demo" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#demo" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+
+
+
+
+<section class="blog_area section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-lg-0">
+                <div class="blog_left_sidebar">
+                    <div class="popular_places_area">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-12">
+                                    <div class="section_title text-center mb_70">
+                                        <h3>Popular Places</h3>
+                                        <p>Suffered alteration in some form, by injected humour or good day randomised booth anim 8-bit hella wolf moon beard words.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                {% for pack in queryset %}
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="single_place">
+                                        <div class="thumb">
+                                            <a href="{{ pack.get_absolute_url }}">
+                                                <img src="{{ pack.thumbnail.url }}" alt="">
+                                            </a>
+
+                                        </div>
+                                        <div class="place_info">
+                                            <a href="destination_details.html">
+                                                <ul class="list">
+                                                    <li>
+                                                        {% for cat in pack.categories.all %}
+                                                        <a href="#">{{ cat }}</a> {% endfor %}
+                                                    </li>
+                                                </ul>
+                                                <a href="{{ pack.get_absolute_url }}">
+                                                    <h3>{{ pack.title }}</h3>
+                                                </a>
+
+                                            </a>
+                                            <p>{{ pack.overview }}</p>
+                                            <div class="rating_days d-flex justify-content-between">
+                                                <span class="d-flex justify-content-center align-items-center">
+                                                    <i class="fa fa-star"></i> 
+                                                    <i class="fa fa-star"></i> 
+                                                    <i class="fa fa-star"></i> 
+                                                    <i class="fa fa-star"></i> 
+                                                    <i class="fa fa-star"></i>
+                                                    <a href="#">{{  pack.view_count }}</a>
+                                                </span>
+                                                <div class="days">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    <a href="#">{{ pack.timestamp|timesince }} ago </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <nav class="blog-pagination justify-content-center d-flex">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                {% if queryset.has_previous %}
+                                <a href="?{{ page_request_var }}={{ queryset.previous_page_number }}" class="page-link" aria-label="Previous">
+                                    <i class="ti-angle-left"></i>
+                                </a>
+                                {% endif %}
+                            </li>
+                            <li class="page-item">
+                                <a href="#" class="page-link">{{ queryset.number }}</a>
+                            </li>
+                            <li class="page-item">
+                                {% if queryset.has_next %}
+                                <a href="?{{ page_request_var }}={{ queryset.next_page_number }}" class="page-link" aria-label="Next">
+                                    <i class="ti-angle-right"></i>
+                                </a>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {% include "sidebar.html" with category_count=category_count most_recent=most_recent tag_count=tag_count featured=featured  %}
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock content %}

@@ -1,0 +1,130 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+
+
+
+<!-- bradcam_area  -->
+<div class="mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="text-center">
+                    <h1>ABOUT US</h1>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% url 'grantha:home' %}"> <i class="fa fa-home"> Home</i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">About us</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/ bradcam_area  -->
+<div class="container mt-5">
+    <div class="row">
+        {% for aboutimage in aboutimage %}
+        <div class="col-lg-4 col-12">
+            <img src="{{ aboutimage.thumbnail.url }}" alt="" style="width: 360px;">
+        </div>
+        <div class="col-lg-8 col-12">
+            <h1>{{ aboutimage.title }}</h1>
+            <p>{{ aboutimage.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+<div class="about_story">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-11 offset-lg-1">
+                        <div class="counter_wrap">
+                            <div class="row">
+                                {% for count in counter_num %}
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="single_counter text-center">
+                                        <h3 class="counter">{{ count.number }}</h3>
+                                        <p>{{ count.text }}</p>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- testimonial_area  -->
+<div class="testimonial_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="testmonial_active owl-carousel">
+                    <div class="single_carousel">
+                        <div class="row justify-content-center">
+                            {% for test in featured %}
+                            <div class="col-lg-8">
+                                <div class="single_testmonial text-center">
+                                    <div class="author_thumb">
+                                        <img src="{{ test.thumbnail.url }}" alt="">
+                                    </div>
+                                    <p>{{ test.comment }}</p>
+                                    <div class="testmonial_author">
+                                        <h3>-{{ test.name }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /testimonial_area  -->
+
+
+<div class="recent_trip_area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="section_title text-center mb_70">
+                    <h3>Recent Trips</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for pack in about %}
+            <div class="col-lg-4 col-md-6">
+                <div class="single_trip">
+                    <div class="thumb">
+                        <img src="{{  pack.thumbnail.url }}" alt="">
+                    </div>
+                    <div class="info">
+                        <div class="date">
+                            <span>{{ pack.timestamp | timesince }} ago </span>
+                        </div>
+                        <a href="{{ pack.get_absolute_url }}">
+                            <h3>{{ pack.title }}</h3>
+                        </a>
+                        <p> {{ pack.overview }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
